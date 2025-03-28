@@ -1,0 +1,28 @@
+# Source files
+src/
+
+# Examples
+examples/
+
+# Development configs
+tsconfig.json
+.gitignore
+.git
+
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
+
+# Environment files
+.env
+.env.*
+
+# Editor directories
+.idea/
+.vscode/
+
+# Logs
+*.log
+npm-debug.log* 
