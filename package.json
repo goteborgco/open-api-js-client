@@ -1,0 +1,35 @@
+{
+  "name": "@goteborgco/open-api-js-client",
+  "version": "1.0.0",
+  "description": "Official JavaScript client for the Göteborg & Co GraphQL API",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "prepare": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "goteborgco",
+    "gothenburg",
+    "api",
+    "graphql",
+    "typescript"
+  ],
+  "author": "Göteborg & Co",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "dotenv": "^16.4.7",
+    "serve": "^14.2.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
