@@ -404,6 +404,284 @@ Properties:
 - `areas: number[]` - Area IDs
 - `tags: number[]` - Tag IDs
 - `category_heading?: string` - Optional category heading
-- `lang: 'en' | 'sv'` - Content language
+- `featuredmedia?: Media[]` - Featured media items
+- `gallery?: Media[]` - Gallery media items
+- `location?: Location` - Location information
+- `dates?: EventDate[]` - Event dates
+- `contact?: Contact` - Contact information
+- `current_in_time?: CurrentInTime` - Temporal availability
+- `translations?: Translations` - Available translations
 - `place_id?: number` - Associated place ID
-- `is_free?: boolean`
+- `is_free?: boolean` - Whether the content is free
+- `lang: 'en' | 'sv'` - Content language
+
+Methods:
+- `getFeaturedMedia(): Media | undefined` - Get featured media if available
+- `getImageUrl(size?: 'full' | 'large' | 'medium' | 'thumbnail'): string | undefined` - Get main image URL
+- `getGalleryUrls(size?: 'full' | 'large' | 'medium' | 'thumbnail'): string[]` - Get all gallery image URLs
+- `isActive(): boolean` - Check if entity is currently active
+- `getCoordinates(): { lat: number; lng: number } | undefined` - Get location coordinates
+- `getFormattedAddress(): string | undefined` - Get formatted address
+- `getContact(): Contact | undefined` - Get contact information
+- `getTranslation(lang: 'en' | 'sv'): number | undefined` - Get translation ID for language
+- `getCurrentInTime(): CurrentInTime | undefined` - Get temporal availability info
+
+### Location
+Represents a physical location
+
+Properties:
+- `address?: string` - Street address
+- `lat?: number` - Latitude
+- `lng?: number` - Longitude
+- `zoom?: number` - Map zoom level
+- `place_id?: string` - Place identifier
+- `name?: string` - Location name
+- `street_number?: string` - Street number
+- `street_name?: string` - Street name
+- `state?: string` - State/region
+- `post_code?: string` - Postal code
+- `country?: string` - Country name
+- `country_short?: string` - Country code
+
+Methods:
+- `getCoordinates(): { lat: number; lng: number } | undefined` - Get coordinates
+- `getFormattedAddress(): string | undefined` - Get full formatted address
+- `getShortAddress(): string | undefined` - Get short address (street and number)
+
+### Contact
+Represents contact information
+
+Properties:
+- `email?: string` - Email address
+- `phone?: string` - Phone number
+- `website?: string` - Website URL
+- `facebook?: string` - Facebook URL
+- `instagram?: string` - Instagram URL
+
+Methods:
+- `getSocialLinks(): { facebook?: string; instagram?: string }` - Get social media links
+- `getContactMethods(): { email?: string; phone?: string; website?: string }` - Get contact methods
+- `hasContactInfo(): boolean` - Check if any contact info exists
+
+### Media
+Represents media items (images, files)
+
+Properties:
+- `id: number` - Media ID
+- `title: string` - Media title
+- `caption?: string` - Media caption
+- `credit?: string` - Media credit
+- `alt_text?: string` - Alt text
+- `media_type?: string` - Media type
+- `mime_type?: string` - MIME type
+- `sizes: MediaSizes` - Available size versions
+
+Methods:
+- `getId(): number` - Get media ID
+- `getCredit(): string | undefined` - Get credit information
+- `getCaption(): string | undefined` - Get caption text
+- `getAltText(): string | undefined` - Get alt text
+- `getMediaType(): string | undefined` - Get media type
+- `getMimeType(): string | undefined` - Get MIME type
+- `getSizes(): MediaSizes` - Get all size versions
+- `getUrl(size?: 'full' | 'large' | 'medium' | 'thumbnail'): string | undefined` - Get URL for size
+
+### MediaSizes
+Collection of media size versions
+
+Properties:
+- `thumbnail?: Image` - Thumbnail version
+- `medium?: Image` - Medium version
+- `large?: Image` - Large version
+- `full?: Image` - Full size version
+
+Methods:
+- `getSize(size: 'full' | 'large' | 'medium' | 'thumbnail'): Image | undefined` - Get specific size
+- `getUrl(size: 'full' | 'large' | 'medium' | 'thumbnail'): string | undefined` - Get URL for size
+- `getDimensions(size: 'full' | 'large' | 'medium' | 'thumbnail'): { width: number; height: number } | undefined` - Get dimensions
+
+### Image
+Represents an image file
+
+Properties:
+- `width: number` - Image width
+- `height: number` - Image height
+- `source_url: string` - Image URL
+- `mime_type: string` - MIME type
+
+### EventDate
+Represents a date range for events
+
+Properties:
+- `start?: string` - Start date (ISO 8601)
+- `end?: string` - End date (ISO 8601)
+
+Methods:
+- `isActive(): boolean` - Check if date range is currently active
+- `getFormattedRange(): string | undefined` - Get formatted date range string
+
+### CurrentInTime
+Represents temporal availability (when content is active/available)
+
+Properties:
+- `months: number[]` - Active months (1-12)
+- `weekdays: number[]` - Active weekdays (0-6, where 0 is Sunday)
+
+Methods:
+- `hasMonth(month: number): boolean` - Check if specific month is included
+- `hasWeekday(weekday: number): boolean` - Check if specific weekday is included
+- `isCurrentlyActive(): boolean` - Check if current date matches the time pattern
+- `getFormattedSchedule(): string | undefined` - Get human-readable schedule (e.g. "Months: January, February | Days: Monday, Tuesday")
+
+### Related
+Collection of related content
+
+Properties:
+- `places?: WpEntity[]` - Related places
+- `guides?: WpEntity[]` - Related guides
+- `events?: WpEntity[]` - Related events
+
+Methods:
+- `getPlaces(): WpEntity[] | undefined` - Get related places
+- `getGuides(): WpEntity[] | undefined` - Get related guides
+- `getEvents(): WpEntity[] | undefined` - Get related events
+- `getAllRelated(): { places?: WpEntity[]; guides?: WpEntity[]; events?: WpEntity[] }` - Get all related content
+- `hasRelatedContent(): boolean` - Check if any related content exists
+
+### Translations
+Manages content translations
+
+Properties:
+- `sv?: number` - Swedish version ID
+- `en?: number` - English version ID
+
+Methods:
+- `getTranslation(lang: 'en' | 'sv'): number | undefined` - Get translation ID for language
+- `hasTranslation(lang: 'en' | 'sv'): boolean` - Check if translation exists
+- `getAvailableTranslations(): { lang: 'en' | 'sv'; id: number }[]` - Get all translations
+
+### TaxonomyTerm
+Represents a term in a taxonomy
+
+Properties:
+- `id: number` - Term ID
+- `name: string` - Term name
+- `count: number` - Usage count
+- `description: string` - Term description
+- `parent?: number` - Parent term ID
+- `children: TaxonomyTerm[]` - Child terms
+
+Methods:
+- `hasParent(): boolean` - Check if term has parent
+- `getParentId(): number | undefined` - Get parent term ID
+- `hasChildren(): boolean` - Check if term has children
+- `getChildren(): TaxonomyTerm[]` - Get child terms
+- `getChildCount(): number` - Get number of direct children
+- `getAllDescendants(): TaxonomyTerm[]` - Get all descendant terms
+
+### Taxonomy
+Represents a taxonomy type
+
+Properties:
+- `name: string` - Taxonomy name
+- `description: string` - Taxonomy description
+- `value: string` - Taxonomy identifier
+- `types: string[]` - Content types this taxonomy is available for
+
+Methods:
+- `getTypes(): string[]` - Get available content types
+- `isAvailableFor(type: string): boolean` - Check if available for content type
+
+### Properties (Map Marker)
+Properties for a map marker
+
+Properties:
+- `name: string` - Marker name
+- `id: number` - Marker ID
+- `icon: string` - Marker icon
+- `thumbnail: string` - Marker thumbnail
+- `type: string` - Marker type
+- `slug: string` - Marker slug
+
+### Geometry
+Geometry information for a map marker
+
+Properties:
+- `type: string` - Geometry type
+- `coordinates: number[]` - Coordinates array
+
+### Feature
+A feature on the map
+
+Properties:
+- `type: string` - Feature type
+- `geometry: Geometry` - Geometry information
+- `properties: Properties` - Marker properties
+
+### Markers
+Collection of map markers
+
+Properties:
+- `type: string` - Collection type
+- `features: Feature[]` - Map features
+
+## Advanced Usage
+
+### Raw GraphQL Queries
+
+While the type-specific methods cover most common use cases, you can also execute raw GraphQL queries for advanced use cases:
+
+```typescript
+const query = `
+    query {
+        guides(filter: { lang: "sv" }) {
+            guides {
+                areas
+                categories
+                category_heading
+                content
+                date
+                excerpt
+                featuredmedia {
+                    alt_text
+                    caption
+                    credit
+                    id
+                    media_type
+                    mime_type
+                    sizes {
+                        full {
+                            height
+                            source_url
+                            width
+                        }
+                    }
+                }
+                free
+                invisible_tags
+                modified
+                tags
+                title
+                translations {
+                    en
+                    sv
+                }
+            }
+        }
+    }
+`;
+
+try {
+  const result = await api.query(query);
+  console.log(result);
+} catch (error) {
+  console.error('GraphQL Error:', error);
+}
+```
+
+This gives you full control over the query structure and allows you to:
+- Access fields not exposed through the type-specific methods
+- Combine multiple queries into a single request
+- Use GraphQL features like fragments and variables
+- Create complex nested queries
+- Access custom fields and relationships
