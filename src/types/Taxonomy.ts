@@ -1,6 +1,7 @@
 import { Client } from '../client/Client';
 import type { LangFilter } from '../interfaces/common';
 import { TaxonomyTerm } from '../entities/TaxonomyTerm';
+import { gql } from '../utils/gql';
 
 /**
  * Taxonomy API for querying specific taxonomies
@@ -38,8 +39,8 @@ export class Taxonomy {
     // Handle lang as an enum value (unquoted)
     const filterStr = filter.lang ? `{ lang: ${filter.lang} }` : '{}';
 
-    const query = `
-      query {
+    const query = gql`
+      query GetTaxonomyTerms {
         taxonomy(
           taxonomyName: "${taxonomyName}",
           filter: ${filterStr}

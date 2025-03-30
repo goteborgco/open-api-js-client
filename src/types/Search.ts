@@ -1,6 +1,7 @@
 import { Client } from '../client/Client';
 import type { SearchFilter, SortOptions } from '../interfaces/common';
 import { WpEntity as WpEntityClass } from '../entities/WpEntity';
+import { gql } from '../utils/gql';
 
 /**
  * Search API for searching content across all types
@@ -128,8 +129,8 @@ export class Search {
       })
       .join(', ') : '';
 
-    const query = `
-      query {
+    const query = gql`
+      query SearchContent {
         search(${filterArgs ? `filter: { ${filterArgs} }` : ''}${sortArgs ? `, sortBy: { ${sortArgs} }` : ''}) {
           ${fields || defaultFields}
         }

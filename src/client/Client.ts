@@ -1,3 +1,7 @@
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client/core';
+import { DocumentNode, parse } from 'graphql';
+import fetch from 'cross-fetch';
+
 /**
  * HTTP client for making GraphQL API requests
  * 
@@ -5,8 +9,7 @@
  * including authentication, request formatting, and error handling.
  */
 export class Client {
-  private apiUrl: string;
-  private subscriptionKey: string;
+  private client: ApolloClient<any>;
 
   /**
    * Initialize the HTTP client
@@ -15,8 +18,20 @@ export class Client {
    * @param subscriptionKey Your API subscription key
    */
   constructor(apiUrl: string, subscriptionKey: string) {
-    this.apiUrl = apiUrl;
-    this.subscriptionKey = subscriptionKey;
+    const httpLink = createHttpLink({
+      uri: apiUrl,
+      fetch,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Ocp-Apim-Subscription-Key': subscriptionKey
+      }
+    });
+
+    this.client = new ApolloClient({
+      link: httpLink,
+      cache: new InMemoryCache(),
+    });
   }
 
   /**
@@ -30,47 +45,35 @@ export class Client {
    *               - GraphQL response contains errors
    *               - Network or other errors occur
    */
-  async execute<T = any>(query: string): Promise<T> {
-    try {
-      const url = `${this.apiUrl}?subscription-key=${encodeURIComponent(this.subscriptionKey)}`;
+  async execute<T = any>(query: string | DocumentNode): Promise<T> {
+    try {      
+      const parsedQuery = typeof query === 'string' ? parse(query) : query;
       
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({ query }),
+      const { data, errors } = await this.client.query({
+        query: parsedQuery,
       });
 
-      if (!response.ok) {
-        const errorDetail = await response.json();
-        const errorMessage = errorDetail.errors 
-          ? JSON.stringify(errorDetail.errors)
-          : await response.text();
-          
+      if (errors?.length) {
+        const errorMessages = errors.map(e => e.message).join(', ');
         throw new Error(
-          `HTTP request failed with status ${response.status}\n` +
-          `Response: ${errorMessage}\n` +
-          `Query: ${query}`
+          `GraphQL errors: ${errorMessages}\n` +
+          `Query: ${typeof query === 'string' ? query : query.loc?.source.body}`
         );
       }
 
-      const result = await response.json();
-
-      if (result.errors) {
-        throw new Error(
-          `GraphQL errors: ${JSON.stringify(result.errors)}\n` +
-          `Query: ${query}`
-        );
+      if (!data) {
+        throw new Error('No data returned from the GraphQL query');
       }
 
-      return result.data as T;
-    } catch (error) {
+      return data as T;
+    } catch (error: any) {
+      if (error.networkError) {
+        throw new Error(`Network error: ${error.networkError.message || 'Connection failed'}`);
+      }
       if (error instanceof Error) {
         throw new Error(`GraphQL query failed: ${error.message}`);
       }
       throw new Error('An unknown error occurred during the GraphQL query');
     }
   }
-} 
+}

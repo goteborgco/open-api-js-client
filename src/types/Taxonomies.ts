@@ -1,6 +1,7 @@
 import { Client } from '../client/Client';
 import type { LangFilter } from '../interfaces/common';
 import { Taxonomy as TaxonomiesClass } from '../entities/Taxonomy';
+import { gql } from '../utils/gql';
 
 export interface TaxonomyInfo {
   name: string;
@@ -40,8 +41,8 @@ export class Taxonomies {
     // Handle lang as an enum value (unquoted)
     const filterStr = filter.lang ? `{ lang: ${filter.lang} }` : '{}';
 
-    const query = `
-      query {
+    const query = gql`
+      query ListTaxonomies {
         taxonomies(filter: ${filterStr}) {
           ${fields || defaultFields}
         }

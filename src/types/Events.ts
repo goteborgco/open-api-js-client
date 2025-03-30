@@ -3,6 +3,7 @@ import type { SortOptions, EventFilter } from '../interfaces/common';
 import { WpEntity as WpEntityClass } from '../entities/WpEntity';
 import { Related as RelatedClass } from '../entities/Related';
 import { Markers as MarkersClass } from '../entities/Markers';
+import { gql } from '../utils/gql';
 
 export interface SingleEventResponse {
   event: WpEntityClass;
@@ -141,8 +142,8 @@ export class Events {
       })
       .join(', ') : '';
 
-    const query = `
-      query {
+    const query = gql`
+      query ListEvents {
         events(${filterArgs ? `filter: { ${filterArgs} }` : ''}${sortArgs ? `, sortBy: { ${sortArgs} }` : ''}) {
           ${fields || defaultFields}
         }
@@ -189,8 +190,8 @@ export class Events {
       }
     `;
 
-    const query = `
-      query {
+    const query = gql`
+      query GetEventById {
         eventById(filter: { id: ${id}, lang: ${lang} }) {
           ${fields || defaultFields}
         }
@@ -204,4 +205,4 @@ export class Events {
       markers: response.eventById.markers ? new MarkersClass(response.eventById.markers) : undefined
     };
   }
-} 
+}

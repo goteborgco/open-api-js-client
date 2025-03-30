@@ -22,7 +22,13 @@
   ],
   "author": "Göteborg & Co",
   "license": "MIT",
+  "dependencies": {
+    "@apollo/client": "^3.9.5",
+    "cross-fetch": "^4.0.0",
+    "graphql": "^16.8.1"
+  },
   "devDependencies": {
+    "@types/graphql": "^14.5.0",
     "@types/node": "^20.11.0",
     "dotenv": "^16.4.7",
     "serve": "^14.2.1",

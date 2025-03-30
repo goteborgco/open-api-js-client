@@ -5,6 +5,7 @@ import { Places } from './types/Places';
 import { Search } from './types/Search';
 import { Taxonomies } from './types/Taxonomies';
 import { Taxonomy } from './types/Taxonomy';
+import { gql } from './utils/gql';
 
 /**
  * Main API client class for interacting with the Göteborg & Co GraphQL API
@@ -28,7 +29,6 @@ export class GoteborgCoApi {
    * @param subscriptionKey Your API subscription key
    */
   constructor(apiUrl: string, subscriptionKey: string) {
-
     if (!apiUrl || !subscriptionKey) {
       throw new Error('API URL and subscription key are required');
     }
@@ -39,7 +39,7 @@ export class GoteborgCoApi {
   /**
    * Execute a raw GraphQL query
    * 
-   * @param query The complete GraphQL query
+   * @param query The complete GraphQL query string
    * @returns The query result
    * @throws Error If the query is empty or execution fails
    */
@@ -47,7 +47,10 @@ export class GoteborgCoApi {
     if (!query?.trim()) {
       throw new Error('Query cannot be empty');
     }
-    return this.client.execute<T>(query);
+
+    // Use the same gql tag function that other types use
+    const formattedQuery = gql`${query}`;
+    return this.client.execute<T>(formattedQuery);
   }
 
   /**

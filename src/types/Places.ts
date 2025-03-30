@@ -3,6 +3,7 @@ import type { PlaceFilter } from '../interfaces/common';
 import { WpEntity as WpEntityClass } from '../entities/WpEntity';
 import { Related as RelatedClass } from '../entities/Related';
 import { Markers as MarkersClass } from '../entities/Markers';
+import { gql } from '../utils/gql';
 
 export interface SinglePlaceResponse {
   place: WpEntityClass;
@@ -146,8 +147,8 @@ export class Places {
       })
       .join(', ');
 
-    const query = `
-      query {
+    const query = gql`
+      query ListPlaces {
         places(${filterArgs ? `filter: { ${filterArgs} }` : ''}) {
           ${fields || defaultFields}
         }
@@ -197,8 +198,8 @@ export class Places {
       }
     `;
 
-    const query = `
-      query {
+    const query = gql`
+      query GetPlaceById {
         placeById(filter: { id: ${id}, lang: ${lang} }) {
           ${fields || defaultFields}
         }

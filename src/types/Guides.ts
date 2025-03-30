@@ -2,6 +2,7 @@ import { Client } from '../client/Client';
 import type { GuideFilter } from '../interfaces/common';
 import { WpEntity as WpEntityClass } from '../entities/WpEntity';
 import { Related as RelatedClass } from '../entities/Related';
+import { gql } from '../utils/gql';
 
 export interface SingleGuideResponse {
   guide: WpEntityClass;
@@ -77,8 +78,8 @@ export class Guides {
       })
       .join(', ');
 
-    const query = `
-      query {
+    const query = gql`
+      query ListGuides {
         guides(${filterArgs ? `filter: { ${filterArgs} }` : ''}${matchDate ? `, matchDate: "${matchDate}"` : ''}) {
           ${fields || defaultFields}
         }
@@ -119,8 +120,8 @@ export class Guides {
       }
     `;
 
-    const query = `
-      query {
+    const query = gql`
+      query GetGuideById {
         guideById(filter: { id: ${id}, lang: ${lang} }) {
           ${fields || defaultFields}
         }
