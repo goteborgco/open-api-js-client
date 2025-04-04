@@ -99,6 +99,7 @@ const customFields = `
   id
   title
   excerpt
+  link
   featuredmedia {
     sizes {
       full {
@@ -162,13 +163,6 @@ const events = await api.events().list({
   end: '2024-12-31'
 });
 
-// List events with location filter
-const nearbyEvents = await api.events().list({
-  lang: 'sv',
-  coords: '11.9746,57.7089', // Note: longitude comes first
-  distance: 2 // 2km radius
-});
-
 // List events with sorting
 const sortedEvents = await api.events().list({
   lang: 'sv',
@@ -182,6 +176,7 @@ const sortedEvents = await api.events().list({
 const customFields = `
   id
   title
+  link
   dates {
     start
     end
@@ -244,6 +239,7 @@ const customFields = `
   id
   title
   excerpt
+  link
   location {
     address
     lat
@@ -292,6 +288,7 @@ const customFields = `
   id
   title
   excerpt
+  link
   featuredmedia {
     sizes {
       medium {

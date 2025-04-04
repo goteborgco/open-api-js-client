@@ -63,6 +63,7 @@ export class Events {
     place_id
     tags
     title
+    link
     translations {
       en
       sv

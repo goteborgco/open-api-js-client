@@ -25,6 +25,7 @@ export class Guides {
     areas
     tags
     category_heading
+    link
     dates {
       end
       start

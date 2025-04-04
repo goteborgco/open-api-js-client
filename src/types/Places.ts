@@ -30,6 +30,7 @@ export class Places {
     categories
     areas
     tags
+    link
     category_heading
     featuredmedia {
       id
