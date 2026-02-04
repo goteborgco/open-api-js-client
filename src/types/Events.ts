@@ -162,13 +162,13 @@ export class Events {
    * Get a specific event by ID
    * 
    * @param id The event ID
-   * @param lang Language code ('en' or 'sv')
+   * @param lang Language code ('en' or 'sv' or 'de')
    * @param fields Optional GraphQL fields to return
    * @returns Event entity with related content and markers
    */
   async getById(
     id: number,
-    lang: 'en' | 'sv',
+    lang: 'en' | 'sv' | 'de',
     fields?: string
   ): Promise<SingleEventResponse> {
     const defaultFields = `

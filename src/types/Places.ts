@@ -173,7 +173,7 @@ export class Places {
    */
   async getById(
     id: number,
-    lang: 'en' | 'sv',
+    lang: 'en' | 'sv' | 'de',
     fields?: string
   ): Promise<SinglePlaceResponse> {
     const defaultFields = `

@@ -66,7 +66,7 @@ Lists guides based on provided filters.
 
 Parameters:
 - `filter: GuideFilter`
-  - `lang: 'en' | 'sv'` - Content language (required)
+  - `lang: 'en' | 'sv' | 'de'` - Content language (required)
   - `categories?: number[]` - Filter by category IDs
   - `areas?: number[]` - Filter by area IDs
   - `tags?: number[]` - Filter by tag IDs
@@ -81,7 +81,7 @@ Retrieves a single guide by ID.
 
 Parameters:
 - `id: number` - Guide ID
-- `lang: 'en' | 'sv'` - Content language
+- `lang: 'en' | 'sv' | 'de'` - Content language
 - `fields?: string | object` - Custom field selection
 
 ```typescript
@@ -128,7 +128,7 @@ Lists events based on provided filters.
 
 Parameters:
 - `filter: EventFilter`
-  - `lang: 'en' | 'sv'` - Content language (required)
+  - `lang: 'en' | 'sv' | 'de'` - Content language (required)
   - `places?: number[]` - Filter by specific place IDs
   - `categories?: number[]` - Filter by category IDs
   - `areas?: number[]` - Filter by area IDs
@@ -151,7 +151,7 @@ Retrieves a single event by ID.
 
 Parameters:
 - `id: number` - Event ID
-- `lang: 'en' | 'sv'` - Content language
+- `lang: 'en' | 'sv' | 'de'` - Content language
 - `fields?: string | object` - Custom field selection
 
 ```typescript
@@ -205,7 +205,7 @@ Lists places based on provided filters.
 
 Parameters:
 - `filter: PlaceFilter`
-  - `lang: 'en' | 'sv'` - Content language (required)
+  - `lang: 'en' | 'sv' | 'de'` - Content language (required)
   - `places?: number[]` - Filter by specific place IDs
   - `categories?: number[]` - Filter by category IDs
   - `areas?: number[]` - Filter by area IDs
@@ -221,7 +221,7 @@ Retrieves a single place by ID.
 
 Parameters:
 - `id: number` - Place ID
-- `lang: 'en' | 'sv'` - Content language
+- `lang: 'en' | 'sv' | 'de'` - Content language
 - `fields?: string | object` - Custom field selection
 
 ```typescript
@@ -270,7 +270,7 @@ Searches across all content types.
 Parameters:
 - `filter: SearchFilter`
   - `query: string` - Search term
-  - `lang: 'en' | 'sv'` - Content language
+  - `lang: 'en' | 'sv' | 'de'` - Content language
 - `sortBy?: SortOptions`
   - `fields?: string[]` - Fields to order by
   - `orders?: ('asc' | 'desc')[]` - Order direction for each field
@@ -315,7 +315,7 @@ Lists all available taxonomies.
 
 Parameters:
 - `filter: LangFilter`
-  - `lang: 'en' | 'sv'` - Content language
+  - `lang: 'en' | 'sv' | 'de'` - Content language
 - `fields?: string | object` - Custom field selection
 
 ```typescript
@@ -347,7 +347,7 @@ Lists terms within a taxonomy.
 Parameters:
 - `taxonomy: string` - Taxonomy identifier (e.g., 'categories', 'areas', 'tags')
 - `filter: LangFilter`
-  - `lang: 'en' | 'sv'` - Content language
+  - `lang: 'en' | 'sv' | 'de'` - Content language
 - `fields?: string | object` - Custom field selection
 - `hierarchical?: boolean` - Whether to return terms in a hierarchical structure (default: false)
 
@@ -410,7 +410,7 @@ Properties:
 - `translations?: Translations` - Available translations
 - `place_id?: number` - Associated place ID
 - `is_free?: boolean` - Whether the content is free
-- `lang: 'en' | 'sv'` - Content language
+- `lang: 'en' | 'sv' | 'de'` - Content language
 
 Methods:
 - `getFeaturedMedia(): Media | undefined` - Get featured media if available
@@ -420,7 +420,7 @@ Methods:
 - `getCoordinates(): { lat: number; lng: number } | undefined` - Get location coordinates
 - `getFormattedAddress(): string | undefined` - Get formatted address
 - `getContact(): Contact | undefined` - Get contact information
-- `getTranslation(lang: 'en' | 'sv'): number | undefined` - Get translation ID for language
+- `getTranslation(lang: 'en' | 'sv' | 'de'): number | undefined` - Get translation ID for language
 - `getCurrentInTime(): CurrentInTime | undefined` - Get temporal availability info
 
 ### Location
@@ -551,11 +551,12 @@ Manages content translations
 Properties:
 - `sv?: number` - Swedish version ID
 - `en?: number` - English version ID
+- `de?: number` - German version ID
 
 Methods:
-- `getTranslation(lang: 'en' | 'sv'): number | undefined` - Get translation ID for language
-- `hasTranslation(lang: 'en' | 'sv'): boolean` - Check if translation exists
-- `getAvailableTranslations(): { lang: 'en' | 'sv'; id: number }[]` - Get all translations
+- `getTranslation(lang: 'en' | 'sv' | 'de'): number | undefined` - Get translation ID for language
+- `hasTranslation(lang: 'en' | 'sv' | 'de'): boolean` - Check if translation exists
+- `getAvailableTranslations(): { lang: 'en' | 'sv' | 'de'; id: number }[]` - Get all translations
 
 ### TaxonomyTerm
 Represents a term in a taxonomy

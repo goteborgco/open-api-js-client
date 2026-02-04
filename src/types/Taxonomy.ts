@@ -17,7 +17,7 @@ export class Taxonomy {
    * 
    * @param taxonomyName The name of the taxonomy to query
    * @param filter Optional filtering options:
-   *              - lang: 'en' | 'sv' - Language filter (enum)
+   *              - lang: 'en' | 'sv' | 'de' - Language filter (enum)
    * @param fields Optional GraphQL fields to return
    * @param hierarchical Whether to return terms in a tree structure
    * @returns Array of taxonomy terms, optionally in a hierarchical structure

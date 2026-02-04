@@ -119,10 +119,11 @@ export interface Related {
 export interface Translations {
   sv?: number;
   en?: number;
+  de?: number;
 
-  getTranslation(lang: 'en' | 'sv'): number | undefined;
-  hasTranslation(lang: 'en' | 'sv'): boolean;
-  getAvailableTranslations(): { lang: 'en' | 'sv'; id: number }[];
+  getTranslation(lang: 'en' | 'sv' | 'de'): number | undefined;
+  hasTranslation(lang: 'en' | 'sv' | 'de'): boolean;
+  getAvailableTranslations(): { lang: 'en' | 'sv' | 'de'; id: number }[];
 }
 
 export interface WpEntity {
@@ -138,7 +139,7 @@ export interface WpEntity {
   areas?: number[];
   tags?: number[];
   invisible_tags?: number[];
-  lang: 'en' | 'sv';
+  lang: 'en' | 'sv' | 'de';
   translations?: Translations;
   featuredmedia?: Media[];
   category_heading?: string;
@@ -158,12 +159,12 @@ export interface WpEntity {
   getCoordinates(): { lat: number; lng: number } | undefined;
   getFormattedAddress(): string | undefined;
   getContact(): Contact | undefined;
-  getTranslation(lang: 'en' | 'sv'): number | undefined;
+  getTranslation(lang: 'en' | 'sv' | 'de'): number | undefined;
   getCurrentInTime(): CurrentInTime | undefined;
 }
 
 export interface GuideFilter {
-  lang: 'en' | 'sv';
+  lang: 'en' | 'sv' | 'de';
   categories?: number[];
   areas?: number[];
   tags?: number[];
@@ -173,7 +174,7 @@ export interface GuideFilter {
 }
 
 export interface EventFilter {
-  lang: 'en' | 'sv';
+  lang: 'en' | 'sv' | 'de';
   places?: number[];
   categories?: number[];
   areas?: number[];
@@ -189,7 +190,7 @@ export interface EventFilter {
 }
 
 export interface PlaceFilter {
-  lang: 'en' | 'sv';
+  lang: 'en' | 'sv' | 'de';
   places?: number[];
   categories?: number[];
   areas?: number[];
@@ -201,7 +202,7 @@ export interface PlaceFilter {
 }
 
 export interface LangFilter {
-  lang?: 'en' | 'sv';
+  lang?: 'en' | 'sv' | 'de';
 }
 
 export interface SearchFilter extends LangFilter {

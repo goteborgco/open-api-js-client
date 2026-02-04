@@ -69,7 +69,7 @@ export class Search {
    * 
    * @param filter Search filter including query and optional filters:
    *               - query: string (required) - The search query text
-   *               - lang: 'en' | 'sv' - Language filter
+   *               - lang: 'en' | 'sv' | 'de' - Language filter
    * @param sort Optional sorting options:
    *            - fields: string[] | string - Fields to sort by
    *            - orders: ('asc' | 'desc')[] | 'asc' | 'desc' - Sort direction(s)
@@ -86,8 +86,8 @@ export class Search {
       throw new Error('Search query cannot be empty');
     }
 
-    if (filter.lang && !['en', 'sv'].includes(filter.lang)) {
-      throw new Error('Language must be either "en" or "sv"');
+    if (filter.lang && !['en', 'sv', 'de'].includes(filter.lang)) {
+      throw new Error('Language must be either "en" or "sv" or "de"');
     }
 
     const defaultFields = `

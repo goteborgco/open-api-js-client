@@ -23,7 +23,7 @@ export class Taxonomies {
    * List all available taxonomies
    * 
    * @param filter Optional filtering options:
-   *              - lang: 'en' | 'sv' - Language filter (enum)
+   *              - lang: 'en' | 'sv' | 'de' - Language filter (enum)
    * @param fields Optional GraphQL fields to return
    * @returns Array of taxonomy information
    */

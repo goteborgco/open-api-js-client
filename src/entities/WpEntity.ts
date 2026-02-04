@@ -36,7 +36,7 @@ export class WpEntity {
   readonly translations?: Translations;
   readonly place_id?: number;
   readonly is_free?: boolean;
-  readonly lang: 'en' | 'sv';
+  readonly lang: 'en' | 'sv' | 'de';
 
   constructor(data: any) {    
     this.id = data.id;
@@ -126,7 +126,7 @@ export class WpEntity {
    * @param lang Language code ('en' or 'sv')
    * @returns Translation ID or undefined if no translation exists
    */
-  getTranslation(lang: 'en' | 'sv'): number | undefined {
+  getTranslation(lang: 'en' | 'sv' | 'de'): number | undefined {
     return this.translations?.getTranslation(lang);
   }
 

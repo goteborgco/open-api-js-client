@@ -1,10 +1,12 @@
 export class Translations {
   readonly sv?: number;
   readonly en?: number;
+  readonly de?: number;
 
   constructor(data: any) {
     this.sv = data.sv;
     this.en = data.en;
+    this.de = data.de;
   }
 
   /**
@@ -12,7 +14,7 @@ export class Translations {
    * @param lang Language code
    * @returns Translation ID or undefined if not available
    */
-  getTranslation(lang: 'en' | 'sv'): number | undefined {
+  getTranslation(lang: 'en' | 'sv' | 'de'): number | undefined {
     return this[lang];
   }
 
@@ -21,7 +23,7 @@ export class Translations {
    * @param lang Language code
    * @returns Whether a translation exists
    */
-  hasTranslation(lang: 'en' | 'sv'): boolean {
+  hasTranslation(lang: 'en' | 'sv' | 'de'): boolean {
     return this[lang] !== undefined;
   }
 
@@ -29,10 +31,11 @@ export class Translations {
    * Get all available translations
    * @returns Object containing all available translations
    */
-  getAvailableTranslations(): { lang: 'en' | 'sv'; id: number }[] {
-    const translations: { lang: 'en' | 'sv'; id: number }[] = [];
+  getAvailableTranslations(): { lang: 'en' | 'sv' | 'de'; id: number }[] {
+    const translations: { lang: 'en' | 'sv' | 'de'; id: number }[] = [];
     if (this.sv) translations.push({ lang: 'sv', id: this.sv });
     if (this.en) translations.push({ lang: 'en', id: this.en });
+    if (this.de) translations.push({ lang: 'de', id: this.de });
     return translations;
   }
 } 

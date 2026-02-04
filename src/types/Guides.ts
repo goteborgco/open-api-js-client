@@ -95,13 +95,13 @@ export class Guides {
    * Get a specific guide by ID
    * 
    * @param id The guide ID
-   * @param lang Language code ('en' or 'sv')
+   * @param lang Language code ('en' or 'sv' or 'de')
    * @param fields Optional GraphQL fields to return
    * @returns Guide entity with related content
    */
   async getById(
     id: number,
-    lang: 'en' | 'sv',
+    lang: 'en' | 'sv' | 'de',
     fields?: string
   ): Promise<SingleGuideResponse> {
     const defaultFields = `
